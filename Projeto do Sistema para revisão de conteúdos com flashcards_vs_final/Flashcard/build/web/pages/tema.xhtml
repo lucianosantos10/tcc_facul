@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/modeloGeral.xhtml">
+
+    <ui:define name="menu">
+        <ui:include src="/includes/menuPrincipal.xhtml"/>
+    </ui:define>
+
+    <ui:define name="conteudo">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div align="center">
+            <b>
+                <p:outputLabel  value="Cadastre um Tema" />
+            </b>
+
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <h:form id="formA">    
+            <div align="center">
+                <p:growl life="1500"/>
+                <p:panelGrid columns="2" >
+                    <p:outputLabel for="tema" value="Tema" />
+                    <p:inputText id="tema" value="#{MBTema.tema.tm_nome}" 
+                                 placeholder="insira um tema" autocomplete="off" size="30"
+                                 onfocus="this.value = '';"/>
+                </p:panelGrid>
+                <br/> 
+                <p:commandButton  value="Cadastrar" icon="ui-icon-star" 
+                                  actionListener="#{MBTema.cadastrar()}" update="formA"
+                                  action="/pages/tema.xhtml">
+                </p:commandButton>
+            </div>
+
+        </h:form>  
+
+    </ui:define>
+
+</ui:composition>
+

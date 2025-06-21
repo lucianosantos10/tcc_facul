@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/modeloGeral.xhtml">
+
+    <ui:define name="menu">
+        <ui:include src="/includes/menuPrincipal.xhtml"/>
+    </ui:define>
+
+    <ui:define name="conteudo">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div align="center">
+            <b>
+                <p:outputLabel  value="Cadastre um Flashcard" />
+            </b>
+
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <h:form id="formA">    
+            <div align="center">
+                <p:growl  life="1500"/> 
+                <p:panelGrid columns="2" >
+                    <p:outputLabel for="codtema" value="Tema" />
+                    <p:autoComplete id="codtema" dropdown="true" 
+                                    value="#{MBFlashcard.flashcard.fc_completa}" 
+                                    placeholder="selecione um tema"
+                                    completeMethod="#{MBFlashcard.listaTemas}" size="30"
+                                    scrollHeight="100" />    
+                    <p:outputLabel for="pergunta" value="Pergunta"/>
+                    <p:inputText id="pergunta" value="#{MBFlashcard.flashcard.fc_pergunta}"
+                                 placeholder="insira uma pergunta" autocomplete="off" size="40" 
+                                 onfocus="this.value = '';"/> 
+                    <p:outputLabel for="resposta" value="Resposta" />
+                    <p:inputText id="resposta" value="#{MBFlashcard.flashcard.fc_resposta}" 
+                                 placeholder="insira uma resposta" autocomplete="off" size="40" 
+                                 onfocus="this.value = '';"/>
+                    <p:outputLabel for="dificuldade" value="Dificuldade" />
+                    <p:autoComplete id="dificuldade" dropdown="true" 
+                                    value="#{MBFlashcard.flashcard.fc_dificuldade}"
+                                    placeholder="selecione"
+                                    completeMethod="#{MBFlashcard.flashcard.nivelDificuldade()}" size="20" />
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Cadastrar" icon="ui-icon-star" 
+                                 actionListener="#{MBFlashcard.cadastrar()}" update="formA"
+                                 action="/pages/flashcard.xhtml">     
+                </p:commandButton>
+            </div> 
+
+        </h:form>  
+
+    </ui:define>
+
+
+</ui:composition>
+

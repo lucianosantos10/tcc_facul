@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      template="/templates/modeloGeral.xhtml">
+    
+    <ui:define name="menu">
+        <ui:include src="/includes/menuPrincipal.xhtml"/>
+    </ui:define>
+    
+     <ui:define name="conteudo">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div align="center">  
+            <b>
+                <p:outputLabel  value="Revisão de Conteúdo" />
+            </b>
+         
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <h:form id="formA">    
+                <div align="center">
+               <p:growl id="msgs" showDetail="true" />
+               <p:panelGrid columns="2" style="width: 470px" id="pgf" >
+                  <p:outputLabel for="codtema" value="Tema" />
+                    <p:autoComplete id="codtema" dropdown="true" 
+                                    value="#{MBPrincipal.flashcard.fc_completa}" 
+                                    placeholder="selecione"
+                                    completeMethod="#{MBPrincipal.listaTemas}" size="30"
+                                    scrollHeight="100"/>    
+                 <p:outputLabel for="dificuldade" value="Dificuldade" />
+                    <p:autoComplete id="dificuldade" dropdown="true" 
+                                    value="#{MBPrincipal.flashcard.fc_dificuldade}"
+                                    placeholder="selecione"
+                                    completeMethod="#{MBPrincipal.flashcard.nivelDificuldade()}" size="20" />
+               
+                 </p:panelGrid>
+                 <br/>
+                  <p:commandButton id="ok1" value="OK" icon="ui-icon-star" 
+                                   actionListener="#{MBPrincipal.buscarPergunta()}" update="outputA msgs" oncomplete="PF('dlgA').show()" 
+                                 >     
+                 </p:commandButton>
+                </div>
+            <p:dialog header=" " resizable="false" showEffect="fade" widgetVar="dlgA" width="600">
+                    <p:scrollPanel mode="native" id="outputA">
+                        <div align="center">
+     
+                        <h:outputText value="Tema: "/>
+                       <h:outputText value="#{MBPrincipal.flashcard.fc_completa}"/>
+                        <h:outputText value=" / Dificuldade: "/>
+                         <h:outputText value="#{MBPrincipal.flashcard.fc_dificuldade}"/>   
+                           <br/>
+                           <br/>
+                            <b>
+                          <h:outputText value="Flashcards  "/>
+                          </b>
+                           <p:autoComplete dropdown="true" id="cp"
+                                     value="#{MBPrincipal.flashcard.fc_completa_pg}" 
+                                    placeholder="selecione"
+                                    completeMethod="#{MBPrincipal.perguntaSelecionada()}" size="30"
+                                    scrollHeight="100" /> 
+                        <br/>      
+                         <br/>
+                          <p:commandButton id="mdat" value="Mudar tema" 
+                                           actionListener="#{MBRelatorio.limpacontador()}" onclick="PF('dlgA').hide()"
+                                           >     
+                        </p:commandButton> 
+                          <n></n>
+                           <n></n>
+                          <n></n>
+                           <n></n>
+                           <p:commandButton id="vresposta" value="Ver Resposta" icon="ui-icon-star" 
+                                          update="outputB msgs" oncomplete="PF('dlgB').show()" 
+                                 >     
+                          </p:commandButton>
+                          <br/>
+                          <br/>
+                          <br/>
+                        
+                          <p:commandButton id="vpont" value="Relatório" 
+                                            update="outputC msgs" oncomplete="PF('dlgC').show()">     
+                          </p:commandButton>
+                       
+                         <br/>
+                         <br/>
+                         </div>
+                         </p:scrollPanel>
+                         
+                    </p:dialog>
+           
+                   
+                   <p:dialog header="Flashcard" resizable="false" showEffect="fade" widgetVar="dlgB" width="650">
+                       <p:scrollPanel mode="native" id="outputB">
+  
+                            <div align="center">
+                              
+                               <h:outputText value="Tema: "/>
+                               <h:outputText value="#{MBPrincipal.flashcard.fc_completa}"/>
+                                <br/>
+                               <h:outputText value="Pergunta: "/>
+                               <h:outputText value="#{MBPrincipal.flashcard.fc_completa_pg}"/> 
+                                <br/>
+                                <br/>
+                         
+                              <b>  
+                             <h:outputText value="Resposta: "/> 
+                               </b> 
+                                <h:outputText value="#{MBPrincipal.respostaSelecionada()}"/>     
+                              <br/>
+                               <br/>
+                                <br/>
+                          <p:commandButton id="errou" value="Errou" icon="ui-icon-star" 
+                                           actionListener="#{MBRelatorio.contadorerro()}" 
+                                           onclick="PF('dlgB').hide()">
+                                                
+                          </p:commandButton>
+                          <n></n>
+                           <n></n>
+                          <n></n>
+                           <n></n>
+                           <p:commandButton id="acertou" value="Acertou" icon="ui-icon-star" 
+                                            actionListener="#{MBRelatorio.contadoracerto()}"
+                                            onclick="PF('dlgB').hide()">     
+                          </p:commandButton>
+                         
+                          <br/>
+                          <br/>
+                           </div>      
+                        
+                      </p:scrollPanel>
+                        
+                        
+                    </p:dialog>
+                    
+                    <p:dialog header="Relatório" resizable="false" showEffect="fade" widgetVar="dlgC" width="650">
+                       <p:scrollPanel mode="native" id="outputC">
+                       <h:form id="formB">    
+                            <div align="center">
+                              <b>   
+                            <h:outputText value="Tema: "/>
+                             </b> 
+                               <h:outputText value="#{MBPrincipal.flashcard.fc_completa}"/>
+                                <br/>    
+                         
+                         <br/>
+                         <br/>
+                          <b>
+                           <h:outputText value="Acertos: "/> 
+                          </b> 
+                           <p:outputLabel value="#{MBRelatorio.recebecontadoracerto}"/>
+                                <n></n>
+                                <n></n>
+                                <n></n>
+                                <n></n>
+                              <b>  
+                             <h:outputText value="Erros: "/> 
+                               </b> 
+                                <p:outputLabel value="#{MBRelatorio.recebecontadorerro}"/>
+                   
+                                <br/>
+                                <br/>
+                           </div> 
+                          </h:form>
+                      </p:scrollPanel>
+               </p:dialog>
+            
+                </h:form>
+          
+    </ui:define>
+    
+    
+</ui:composition>
+
+
+
